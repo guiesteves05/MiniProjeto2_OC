@@ -42,7 +42,7 @@ void stats_record(Event event)
             counters.memory_writes++;
             counters.cycles += MEMORY_WRITE_CYCLES;
             break;
-        case EVENT_COUNT:
+        case EVENT_COUNT: // to avoid warnings
         default:
             break;
     }
