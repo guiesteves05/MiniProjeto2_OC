@@ -56,9 +56,9 @@ uint8_t dm_read(Cache *cache, uint32_t address)
     stats_record(EVENT_CPU_READ);
     L1Line *line = dm_prepare_line(cache, address);
 
-    // Extract the single requested byte (address % BLOCK_SIZE = byte offset)
-    uint8_t offset = line->data[address % BLOCK_SIZE];
-    return offset;
+    // Extract the single requested byte at that offset (address % BLOCK_SIZE = byte offset)
+    uint8_t byte = line->data[address % BLOCK_SIZE];
+    return byte;
 }
 
 void dm_write(Cache *cache, uint32_t address, uint8_t value)
@@ -67,6 +67,7 @@ void dm_write(Cache *cache, uint32_t address, uint8_t value)
     L1Line *line = dm_prepare_line(cache, address);
 
     // Update only the target byte inside the cached block and mark the line dirty
+    // main memory is not updated yet
     line->data[address % BLOCK_SIZE] = value;
     line->dirty = true;
 }
